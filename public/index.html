@@ -3,76 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Todo List</title>
+  <title>ToDo Dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="app-shell">
-    <div class="noise"></div>
-    <main class="container">
-      <section class="hero">
-        <div class="hero-top">
-          <div>
-            <div class="eyebrow">Equipe dev collaborative</div>
-            <h1>Todo Dev Board</h1>
-            <p class="hero-text">Un board partagé élégant, rapide et lisible pour répartir les tâches, visualiser l’importance et identifier qui fait quoi.</p>
-          </div>
-          <div class="hero-stats">
-            <div class="stat-card">
-              <span>Total</span>
-              <strong id="stat-total">0</strong>
-            </div>
-            <div class="stat-card">
-              <span>Terminées</span>
-              <strong id="stat-done">0</strong>
-            </div>
-            <div class="stat-card">
-              <span>Urgentes</span>
-              <strong id="stat-critical">0</strong>
-            </div>
-          </div>
-        </div>
-      </section>
+  <div class="background"></div>
+  <div class="grain"></div>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>ToDoList</h1>
+      </div>
+      <div class="hero-stats">
+        <article class="stat-card">
+          <span>Total</span>
+          <strong id="stat-total">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Terminées</span>
+          <strong id="stat-done">0</strong>
+        </article>
+        <article class="stat-card accent">
+          <span>Critiques</span>
+          <strong id="stat-critical">0</strong>
+        </article>
+      </div>
+    </section>
 
-      <section class="panel panel-profile">
-        <div class="panel-head">
+    <section class="team-strip">
+      <article class="member-card featured-gold">
+        <div class="member-avatar avatar-fufu">F</div>
+        <div class="member-content">
+          <strong>FuFu</strong>
+          <span>Dev Lead</span>
+        </div>
+      </article>
+      <article class="member-card featured-bronze">
+        <div class="member-avatar avatar-pomplar">P</div>
+        <div class="member-content">
+          <strong>Pomplar</strong>
+          <span>Senior Dev</span>
+        </div>
+      </article>
+      <article class="member-card featured-deep">
+        <div class="member-avatar avatar-stream">S</div>
+        <div class="member-content">
+          <strong>Pomplar</strong>
+          <span>Stream & Scripts FiveM</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid-top">
+      <article class="panel">
+        <div class="panel-header">
           <div>
             <span class="panel-kicker">Identité</span>
-            <h2>Ton profil</h2>
+            <h2>Profil développeur</h2>
           </div>
         </div>
-        <div class="profile-grid">
+        <div class="identity-grid">
           <div class="field">
             <label for="pseudo">Pseudo</label>
             <input id="pseudo" type="text" maxlength="30" placeholder="Ex: FuFu">
           </div>
-          <div class="preview-card">
-            <span class="preview-label">Badge aperçu</span>
-            <div class="dev-badge-preview" id="dev-badge-preview">
-              <span class="dev-avatar" id="dev-avatar">F</span>
+          <div class="identity-preview" id="dev-badge-preview">
+            <span class="identity-label">Badge personnel</span>
+            <div class="dev-badge dev-badge-large">
+              <span class="dev-avatar" id="dev-avatar">A</span>
               <div class="dev-meta">
                 <strong id="dev-name">Anonyme</strong>
-                <span id="dev-role">Dev badge auto</span>
+                <span id="dev-role">Collaborateur</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </article>
 
-      <section class="panel panel-create">
-        <div class="panel-head">
+      <article class="panel">
+        <div class="panel-header">
           <div>
-            <span class="panel-kicker">Ajout rapide</span>
+            <span class="panel-kicker">Création</span>
             <h2>Nouvelle tâche</h2>
           </div>
         </div>
         <form id="todo-form" class="create-grid">
           <div class="field field-wide">
-            <label for="todo-input">Titre de la tâche</label>
-            <input id="todo-input" type="text" maxlength="200" placeholder="Ex: Optimiser le menu métier">
+            <label for="todo-input">Titre</label>
+            <input id="todo-input" type="text" maxlength="200" placeholder="Ex: Finaliser le menu administration premium">
           </div>
           <div class="field">
             <label for="priority">Importance</label>
@@ -83,42 +104,38 @@
               <option value="critical">Critique</option>
             </select>
           </div>
-          <div class="field field-submit">
+          <div class="field submit-field">
             <label>&nbsp;</label>
-            <button type="submit" id="submit-btn">Ajouter la tâche</button>
+            <button id="submit-btn" type="submit">Ajouter la tâche</button>
           </div>
         </form>
-      </section>
+      </article>
+    </section>
 
-      <section class="panel panel-toolbar">
-        <div class="toolbar">
-          <div class="toolbar-left">
-            <div class="segment" id="filter-segment">
-              <button type="button" class="segment-btn active" data-filter="all">Toutes</button>
-              <button type="button" class="segment-btn" data-filter="open">Ouvertes</button>
-              <button type="button" class="segment-btn" data-filter="done">Terminées</button>
-            </div>
-          </div>
-          <div class="toolbar-right">
-            <div class="search-box">
-              <input id="search-input" type="text" maxlength="50" placeholder="Rechercher une tâche ou un dev">
-            </div>
-          </div>
+    <section class="panel toolbar-panel">
+      <div class="toolbar">
+        <div class="segment" id="filter-segment">
+          <button type="button" class="segment-btn active" data-filter="all">Toutes</button>
+          <button type="button" class="segment-btn" data-filter="open">Ouvertes</button>
+          <button type="button" class="segment-btn" data-filter="done">Terminées</button>
         </div>
-      </section>
+        <div class="search-box">
+          <input id="search-input" type="text" maxlength="50" placeholder="Rechercher une tâche ou un dev">
+        </div>
+      </div>
+    </section>
 
-      <section class="panel panel-board">
-        <div class="board-head">
-          <div>
-            <span class="panel-kicker">Board partagé</span>
-            <h2>Liste des tâches</h2>
-          </div>
-          <div id="count" class="count-chip"></div>
+    <section class="panel board-panel">
+      <div class="board-head">
+        <div>
+          <span class="panel-kicker">Board</span>
+          <h2>Tâches synchronisées</h2>
         </div>
-        <ul id="todo-list" class="todo-list"></ul>
-      </section>
-    </main>
-  </div>
+        <div id="count" class="count-pill"></div>
+      </div>
+      <ul id="todo-list" class="todo-list"></ul>
+    </section>
+  </main>
   <script src="/app.js"></script>
 </body>
 </html>

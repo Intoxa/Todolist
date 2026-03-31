@@ -34,7 +34,11 @@ const specialProfiles={
     displayName:"Pomplar",
     role:"Senior Dev · Stream & Scripts FiveM",
     background:"linear-gradient(135deg,#cf9c67 0%,#8f5d33 100%)"
-  }
+  },
+  bradford:{
+    displayName:"Bradford",
+    role:"Senior Dev",
+    background:"linear-gradient(135deg,#cf9c67 0%,#8f5d33 100%)"
 }
 
 pseudoInput.value=localStorage.getItem("todo_pseudo")||""

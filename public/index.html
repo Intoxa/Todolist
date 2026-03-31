@@ -3,29 +3,121 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Todo Dev</title>
+  <title>Todo List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Todo Dev</h1>
-    <div class="card">
-      <label for="pseudo">Ton pseudo</label>
-      <input id="pseudo" type="text" maxlength="30" placeholder="Ex: FuFu">
-    </div>
-    <div class="card">
-      <form id="todo-form">
-        <label for="todo-input">Nouvelle tâche</label>
-        <div class="row">
-          <input id="todo-input" type="text" maxlength="200" placeholder="Ex: Corriger le script garage">
-          <button type="submit">Ajouter</button>
+  <div class="app-shell">
+    <div class="noise"></div>
+    <main class="container">
+      <section class="hero">
+        <div class="hero-top">
+          <div>
+            <div class="eyebrow">Equipe dev collaborative</div>
+            <h1>Todo Dev Board</h1>
+            <p class="hero-text">Un board partagé élégant, rapide et lisible pour répartir les tâches, visualiser l’importance et identifier qui fait quoi.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span>Total</span>
+              <strong id="stat-total">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Terminées</span>
+              <strong id="stat-done">0</strong>
+            </div>
+            <div class="stat-card">
+              <span>Urgentes</span>
+              <strong id="stat-critical">0</strong>
+            </div>
+          </div>
         </div>
-      </form>
-    </div>
-    <div class="card">
-      <div id="count"></div>
-      <ul id="todo-list"></ul>
-    </div>
+      </section>
+
+      <section class="panel panel-profile">
+        <div class="panel-head">
+          <div>
+            <span class="panel-kicker">Identité</span>
+            <h2>Ton profil</h2>
+          </div>
+        </div>
+        <div class="profile-grid">
+          <div class="field">
+            <label for="pseudo">Pseudo</label>
+            <input id="pseudo" type="text" maxlength="30" placeholder="Ex: FuFu">
+          </div>
+          <div class="preview-card">
+            <span class="preview-label">Badge aperçu</span>
+            <div class="dev-badge-preview" id="dev-badge-preview">
+              <span class="dev-avatar" id="dev-avatar">F</span>
+              <div class="dev-meta">
+                <strong id="dev-name">Anonyme</strong>
+                <span id="dev-role">Dev badge auto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel-create">
+        <div class="panel-head">
+          <div>
+            <span class="panel-kicker">Ajout rapide</span>
+            <h2>Nouvelle tâche</h2>
+          </div>
+        </div>
+        <form id="todo-form" class="create-grid">
+          <div class="field field-wide">
+            <label for="todo-input">Titre de la tâche</label>
+            <input id="todo-input" type="text" maxlength="200" placeholder="Ex: Optimiser le menu métier">
+          </div>
+          <div class="field">
+            <label for="priority">Importance</label>
+            <select id="priority">
+              <option value="low">Faible</option>
+              <option value="medium" selected>Moyenne</option>
+              <option value="high">Haute</option>
+              <option value="critical">Critique</option>
+            </select>
+          </div>
+          <div class="field field-submit">
+            <label>&nbsp;</label>
+            <button type="submit" id="submit-btn">Ajouter la tâche</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel panel-toolbar">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="segment" id="filter-segment">
+              <button type="button" class="segment-btn active" data-filter="all">Toutes</button>
+              <button type="button" class="segment-btn" data-filter="open">Ouvertes</button>
+              <button type="button" class="segment-btn" data-filter="done">Terminées</button>
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <div class="search-box">
+              <input id="search-input" type="text" maxlength="50" placeholder="Rechercher une tâche ou un dev">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel panel-board">
+        <div class="board-head">
+          <div>
+            <span class="panel-kicker">Board partagé</span>
+            <h2>Liste des tâches</h2>
+          </div>
+          <div id="count" class="count-chip"></div>
+        </div>
+        <ul id="todo-list" class="todo-list"></ul>
+      </section>
+    </main>
   </div>
   <script src="/app.js"></script>
 </body>

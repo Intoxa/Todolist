@@ -15,7 +15,18 @@ let clients=[]
 
 function readState(){
   try{
-    return JSON.parse(fs.readFileSync(dataFile,"utf8"))
+    const raw=JSON.parse(fs.readFileSync(dataFile,"utf8"))
+    if(!raw||!Array.isArray(raw.todos))return {todos:[]}
+    return {
+      todos:raw.todos.map(todo=>({
+        id:String(todo.id||randomUUID()),
+        text:String(todo.text||""),
+        author:String(todo.author||"Anonyme"),
+        priority:["low","medium","high","critical"].includes(todo.priority)?todo.priority:"medium",
+        done:Boolean(todo.done),
+        createdAt:String(todo.createdAt||new Date().toISOString())
+      }))
+    }
   }catch{
     return {todos:[]}
   }
@@ -97,6 +108,7 @@ const server=http.createServer(async(req,res)=>{
       const body=await parseBody(req)
       const author=String(body.author||"Anonyme").trim().slice(0,30)||"Anonyme"
       const text=String(body.text||"").trim().slice(0,200)
+      const priority=["low","medium","high","critical"].includes(body.priority)?body.priority:"medium"
       if(!text){
         sendJson(res,400,{error:"Texte requis"})
         return
@@ -106,6 +118,7 @@ const server=http.createServer(async(req,res)=>{
         id:randomUUID(),
         text,
         author,
+        priority,
         done:false,
         createdAt:new Date().toISOString()
       }
@@ -130,6 +143,11 @@ const server=http.createServer(async(req,res)=>{
         return
       }
       if(typeof body.done==="boolean")todo.done=body.done
+      if(typeof body.text==="string"){
+        const text=body.text.trim().slice(0,200)
+        if(text)todo.text=text
+      }
+      if(["low","medium","high","critical"].includes(body.priority))todo.priority=body.priority
       writeState(state)
       broadcast()
       sendJson(res,200,todo)

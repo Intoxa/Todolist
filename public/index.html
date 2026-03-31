@@ -3,77 +3,107 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>ToDo Dev</title>
+  <title>Atelier Dev</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="background"></div>
-  <div class="grain"></div>
-  <main class="shell">
-    <section class="hero">
-      <div class="hero-copy">
-        <h1>ToDoList</h1>
+  <div class="app-bg">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+    <div class="orb orb-c"></div>
+    <div class="grid-mask"></div>
+    <div class="noise"></div>
+  </div>
+
+  <main class="app-shell">
+    <section class="hero-panel">
+      <div class="hero-content">
+        <div class="eyebrow-row">
+          <span class="live-pill">
+            <span class="live-dot"></span>
+            Synchronisé en direct
+          </span>
+        </div>
+        <div class="hero-actions">
+          <div class="hero-note-card">
+            <span class="hero-note-label">Direction équipe</span>
+            <strong>FuFu · Dev Lead</strong>
+            <span>Pomplar ·  Stream & Scripts FiveM</span>
+            <span>BradFord · Senior Dev</span>
+          </div>
+        </div>
       </div>
-      <div class="hero-stats">
-        <article class="stat-card">
+
+      <div class="hero-metrics">
+        <article class="metric-card">
           <span>Total</span>
           <strong id="stat-total">0</strong>
+          <small>Volume global</small>
         </article>
-        <article class="stat-card">
+        <article class="metric-card">
           <span>Terminées</span>
           <strong id="stat-done">0</strong>
+          <small>Exécution validée</small>
         </article>
-        <article class="stat-card accent">
+        <article class="metric-card accent">
           <span>Critiques</span>
           <strong id="stat-critical">0</strong>
+          <small>Priorité maximale</small>
         </article>
       </div>
     </section>
 
-    <section class="team-strip">
-      <article class="member-card featured-gold">
-        <div class="member-avatar avatar-fufu">F</div>
-        <div class="member-content">
+    <section class="lead-strip">
+      <article class="lead-card lead-fufu">
+        <div class="lead-glow"></div>
+        <div class="lead-avatar">F</div>
+        <div class="lead-meta">
           <strong>FuFu</strong>
           <span>Dev Lead</span>
         </div>
       </article>
-      <article class="member-card featured-bronze">
-        <div class="member-avatar avatar-pomplar">P</div>
-        <div class="member-content">
+      <article class="lead-card lead-pomplar">
+        <div class="lead-glow"></div>
+        <div class="lead-avatar">P</div>
+        <div class="lead-meta">
           <strong>Bradford</strong>
           <span>Senior Dev</span>
         </div>
       </article>
-      <article class="member-card featured-deep">
-        <div class="member-avatar avatar-stream">S</div>
-        <div class="member-content">
+      <article class="lead-card lead-stream">
+        <div class="lead-glow"></div>
+        <div class="lead-avatar">S</div>
+        <div class="lead-meta">
           <strong>Pomplar</strong>
           <span>Stream & Scripts FiveM</span>
         </div>
       </article>
     </section>
 
-    <section class="grid-top">
-      <article class="panel">
-        <div class="panel-header">
+    <section class="dashboard-grid">
+      <article class="panel identity-panel">
+        <div class="panel-head">
           <div>
-            <span class="panel-kicker">Identité</span>
-            <h2>Profil développeur</h2>
+            <span class="panel-kicker">Profil</span>
+            <h2>Identité développeur</h2>
           </div>
         </div>
-        <div class="identity-grid">
+
+        <div class="identity-layout">
           <div class="field">
             <label for="pseudo">Pseudo</label>
             <input id="pseudo" type="text" maxlength="30" placeholder="Ex: FuFu">
           </div>
-          <div class="identity-preview" id="dev-badge-preview">
-            <span class="identity-label">Badge personnel</span>
-            <div class="dev-badge dev-badge-large">
-              <span class="dev-avatar" id="dev-avatar">A</span>
+
+          <div class="identity-card" id="dev-badge-preview">
+            <div class="identity-card-head">
+              <span class="identity-card-label">Badge personnel</span>
+            </div>
+            <div class="identity-badge">
+              <span class="dev-avatar large" id="dev-avatar">A</span>
               <div class="dev-meta">
                 <strong id="dev-name">Anonyme</strong>
                 <span id="dev-role">Collaborateur</span>
@@ -83,18 +113,20 @@
         </div>
       </article>
 
-      <article class="panel">
-        <div class="panel-header">
+      <article class="panel create-panel">
+        <div class="panel-head">
           <div>
             <span class="panel-kicker">Création</span>
             <h2>Nouvelle tâche</h2>
           </div>
         </div>
-        <form id="todo-form" class="create-grid">
-          <div class="field field-wide">
+
+        <form id="todo-form" class="create-layout">
+          <div class="field field-span">
             <label for="todo-input">Titre</label>
             <input id="todo-input" type="text" maxlength="200" placeholder="Ex: Finaliser le menu administration premium">
           </div>
+
           <div class="field">
             <label for="priority">Importance</label>
             <select id="priority">
@@ -104,6 +136,7 @@
               <option value="critical">Critique</option>
             </select>
           </div>
+
           <div class="field submit-field">
             <label>&nbsp;</label>
             <button id="submit-btn" type="submit">Ajouter la tâche</button>
@@ -112,14 +145,15 @@
       </article>
     </section>
 
-    <section class="panel toolbar-panel">
-      <div class="toolbar">
+    <section class="panel command-panel">
+      <div class="command-top">
         <div class="segment" id="filter-segment">
           <button type="button" class="segment-btn active" data-filter="all">Toutes</button>
           <button type="button" class="segment-btn" data-filter="open">Ouvertes</button>
           <button type="button" class="segment-btn" data-filter="done">Terminées</button>
         </div>
-        <div class="search-box">
+
+        <div class="search-shell">
           <input id="search-input" type="text" maxlength="50" placeholder="Rechercher une tâche ou un dev">
         </div>
       </div>
@@ -136,6 +170,7 @@
       <ul id="todo-list" class="todo-list"></ul>
     </section>
   </main>
+
   <script src="/app.js"></script>
 </body>
 </html>

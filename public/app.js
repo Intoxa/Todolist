@@ -9,7 +9,6 @@ const statDone=document.getElementById("stat-done")
 const statCritical=document.getElementById("stat-critical")
 const searchInput=document.getElementById("search-input")
 const filterSegment=document.getElementById("filter-segment")
-const devBadgePreview=document.getElementById("dev-badge-preview")
 const devAvatar=document.getElementById("dev-avatar")
 const devName=document.getElementById("dev-name")
 const devRole=document.getElementById("dev-role")
@@ -25,44 +24,61 @@ const priorityMap={
   critical:{label:"Critique"}
 }
 
+const specialProfiles={
+  fufu:{
+    displayName:"FuFu",
+    role:"Dev Lead",
+    background:"linear-gradient(135deg,#f1dfb4 0%,#b88946 100%)"
+  },
+  pomplar:{
+    displayName:"Pomplar",
+    role:"Senior Dev · Stream & Scripts FiveM",
+    background:"linear-gradient(135deg,#d7a06c 0%,#8e5d33 100%)"
+  }
+}
+
 pseudoInput.value=localStorage.getItem("todo_pseudo")||""
 
 function normalizePseudo(value){
   return (value||"").trim().slice(0,30)||"Anonyme"
 }
 
-function getDevTheme(name){
+function getProfile(name){
   const clean=normalizePseudo(name)
+  const key=clean.toLowerCase()
+  if(specialProfiles[key]){
+    return {
+      initial:specialProfiles[key].displayName.charAt(0).toUpperCase(),
+      displayName:specialProfiles[key].displayName,
+      role:specialProfiles[key].role,
+      background:specialProfiles[key].background
+    }
+  }
   const palettes=[
-    ["#4f46e5","#7c3aed"],
-    ["#2563eb","#06b6d4"],
-    ["#0f766e","#14b8a6"],
-    ["#ea580c","#f59e0b"],
-    ["#dc2626","#f43f5e"],
-    ["#7c2d12","#fb7185"],
-    ["#0f766e","#22c55e"],
-    ["#1d4ed8","#8b5cf6"]
+    ["#7d5b34","#d6b36a"],
+    ["#8f6139","#c99a5d"],
+    ["#5a4f40","#b69a72"],
+    ["#7b6a54","#d1b07a"],
+    ["#6a4c36","#c6865a"]
   ]
   let hash=0
   for(let i=0;i<clean.length;i++)hash=(hash*31+clean.charCodeAt(i))>>>0
   const palette=palettes[hash%palettes.length]
-  const rolePool=["Backend Dev","Frontend Dev","Full Stack Dev","Gameplay Dev","UI Engineer","System Dev","Lead Dev","Core Dev"]
-  const role=rolePool[hash%rolePool.length]
+  const roles=["Collaborateur","Developer","Core Dev","Gameplay Dev","UI Engineer","Backend Dev","Frontend Dev"]
   return {
     initial:clean.charAt(0).toUpperCase(),
-    role,
+    displayName:clean,
+    role:roles[hash%roles.length],
     background:`linear-gradient(135deg,${palette[0]},${palette[1]})`
   }
 }
 
 function updatePreview(){
-  const name=normalizePseudo(pseudoInput.value)
-  const theme=getDevTheme(name)
-  devAvatar.textContent=theme.initial
-  devAvatar.style.background=theme.background
-  devName.textContent=name
-  devRole.textContent=theme.role
-  devBadgePreview.style.borderColor="rgba(255,255,255,.06)"
+  const profile=getProfile(pseudoInput.value)
+  devAvatar.textContent=profile.initial
+  devAvatar.style.background=profile.background
+  devName.textContent=profile.displayName
+  devRole.textContent=profile.role
 }
 
 function escapeHtml(value){
@@ -124,7 +140,7 @@ function render(){
   }
 
   todoList.innerHTML=visibleTodos.map(todo=>{
-    const theme=getDevTheme(todo.author)
+    const profile=getProfile(todo.author)
     const priorityLabel=priorityMap[todo.priority]?.label||"Moyenne"
     return `
       <li class="todo priority-${todo.priority} ${todo.done?"done-task":""}">
@@ -133,19 +149,17 @@ function render(){
         </div>
         <div class="todo-main">
           <div class="todo-top">
-            <div class="todo-title-wrap">
-              <h3 class="todo-title">${escapeHtml(todo.text)}</h3>
-            </div>
+            <h3 class="todo-title">${escapeHtml(todo.text)}</h3>
             <div class="todo-actions">
               <button class="delete-btn" onclick="deleteTodo('${todo.id}')">Supprimer</button>
             </div>
           </div>
           <div class="todo-meta-row">
             <div class="dev-badge">
-              <span class="dev-avatar" style="background:${theme.background}">${escapeHtml(theme.initial)}</span>
+              <span class="dev-avatar" style="background:${profile.background}">${escapeHtml(profile.initial)}</span>
               <div class="dev-meta">
-                <strong>${escapeHtml(normalizePseudo(todo.author))}</strong>
-                <span>${escapeHtml(theme.role)}</span>
+                <strong>${escapeHtml(profile.displayName)}</strong>
+                <span>${escapeHtml(profile.role)}</span>
               </div>
             </div>
             <span class="priority-badge priority-${todo.priority}">${escapeHtml(priorityLabel)}</span>

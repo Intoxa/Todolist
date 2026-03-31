@@ -28,12 +28,12 @@ const specialProfiles={
   fufu:{
     displayName:"FuFu",
     role:"Dev Lead",
-    background:"linear-gradient(135deg,#f1dfb4 0%,#b88946 100%)"
+    background:"linear-gradient(135deg,#f3e2b7 0%,#b88643 100%)"
   },
   pomplar:{
     displayName:"Pomplar",
     role:"Senior Dev · Stream & Scripts FiveM",
-    background:"linear-gradient(135deg,#d7a06c 0%,#8e5d33 100%)"
+    background:"linear-gradient(135deg,#cf9c67 0%,#8f5d33 100%)"
   }
 }
 
@@ -55,30 +55,22 @@ function getProfile(name){
     }
   }
   const palettes=[
-    ["#7d5b34","#d6b36a"],
-    ["#8f6139","#c99a5d"],
-    ["#5a4f40","#b69a72"],
-    ["#7b6a54","#d1b07a"],
-    ["#6a4c36","#c6865a"]
+    ["#715330","#c89a58"],
+    ["#4d5e72","#86abc8"],
+    ["#7d6040","#c79f68"],
+    ["#59624f","#8faf77"],
+    ["#6e5050","#bb7e78"]
   ]
+  const roles=["Collaborateur","Developer","Core Dev","Gameplay Dev","Backend Dev","Frontend Dev","UI Engineer"]
   let hash=0
   for(let i=0;i<clean.length;i++)hash=(hash*31+clean.charCodeAt(i))>>>0
   const palette=palettes[hash%palettes.length]
-  const roles=["Collaborateur","Developer","Core Dev","Gameplay Dev","UI Engineer","Backend Dev","Frontend Dev"]
   return {
     initial:clean.charAt(0).toUpperCase(),
     displayName:clean,
     role:roles[hash%roles.length],
     background:`linear-gradient(135deg,${palette[0]},${palette[1]})`
   }
-}
-
-function updatePreview(){
-  const profile=getProfile(pseudoInput.value)
-  devAvatar.textContent=profile.initial
-  devAvatar.style.background=profile.background
-  devName.textContent=profile.displayName
-  devRole.textContent=profile.role
 }
 
 function escapeHtml(value){
@@ -99,6 +91,14 @@ function formatDate(value){
     hour:"2-digit",
     minute:"2-digit"
   }).format(date)
+}
+
+function updatePreview(){
+  const profile=getProfile(pseudoInput.value)
+  devAvatar.textContent=profile.initial
+  devAvatar.style.background=profile.background
+  devName.textContent=profile.displayName
+  devRole.textContent=profile.role
 }
 
 function getFilteredTodos(){
